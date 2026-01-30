@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { dashboardAPI } from '@/lib/api';
+import { dashboardAPI, todoAPI } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import { Dashboard } from '@/lib/types';
 
@@ -234,8 +234,16 @@ export default function UniversityDetailPage() {
                       <input
                         type="checkbox"
                         checked={task.is_completed}
+                        onChange={async (e) => {
+                          try {
+                            await todoAPI.update(task.id, { is_completed: e.target.checked });
+                            // Optionally refresh the page or update local state
+                            window.location.reload();
+                          } catch (error) {
+                            console.error('Failed to update todo:', error);
+                          }
+                        }}
                         className="w-5 h-5 rounded border-gray-400 cursor-pointer mt-1"
-                        disabled
                       />
                       <div className="flex-1">
                         <p className="font-semibold text-white text-base">{task.title}</p>
