@@ -54,7 +54,7 @@ export default function UniversityDetailPage() {
     );
   }
 
-  const commitment = dashboard?.committed_universities.find(
+  const commitment = dashboard?.committed_universities?.find(
     c => c.shortlisted_university.id === universityId
   );
 
