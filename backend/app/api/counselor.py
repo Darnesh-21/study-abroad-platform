@@ -41,6 +41,20 @@ PREDEFINED_QUESTIONS = {
 }
 
 
+def remove_divider_lines(text: str) -> str:
+    """Remove decorative horizontal lines from responses"""
+    lines = text.split('\n')
+    filtered_lines = []
+    for line in lines:
+        trimmed = line.strip()
+        # Skip lines that are only decorative characters
+        if trimmed and not all(c in '━─═─_=*~┃│║╋┣┫┳┻ ' for c in trimmed):
+            filtered_lines.append(line)
+        elif not trimmed:  # Keep empty lines for spacing
+            filtered_lines.append(line)
+    return '\n'.join(filtered_lines)
+
+
 def generate_personalized_response(user: User, profile: UserProfile, db: Session, question_type: str) -> str:
     """Generate tailored responses based on user's actual profile data"""
     
@@ -48,7 +62,7 @@ def generate_personalized_response(user: User, profile: UserProfile, db: Session
         years_until_target = profile.target_intake_year - 2026
         gpa_strength = "Strong" if profile.gpa_percentage and profile.gpa_percentage >= 3.5 else "Good" if profile.gpa_percentage and profile.gpa_percentage >= 3.0 else "Average"
         
-        return f""" HOW TO CHOOSE THE RIGHT UNIVERSITY
+        return remove_divider_lines(f""" HOW TO CHOOSE THE RIGHT UNIVERSITY
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -140,7 +154,7 @@ Financial Reality:
 □ Prepare Statement of Purpose (SOP)
 □ Identify recommender professors
 
- You have {years_until_target} years - plenty of time to prepare!"""
+ You have {years_until_target} years - plenty of time to prepare!""")
 
     elif question_type == "university_comparison":
         shortlisted = db.query(ShortlistedUniversity).filter(
@@ -220,7 +234,7 @@ EXAMPLE WEIGHTING (Adjust to YOUR priorities):
 - Career Outcomes: 25%
 - Timeline: 10%
 
-Start comparing now to make an informed decision! """
+Start comparing now to make an informed decision! """)
         
         return response
 
@@ -228,7 +242,7 @@ Start comparing now to make an informed decision! """
         countries = profile.preferred_countries or "your destination countries"
         target_year = profile.target_intake_year
         
-        return f"""️ VISA REQUIREMENTS FOR YOUR STUDY ABROAD
+        return remove_divider_lines(f"""️ VISA REQUIREMENTS FOR YOUR STUDY ABROAD
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -315,13 +329,13 @@ May-Jun {target_year}:
   • Start gathering documents NOW - universities are slow!
   • Don't delay medical exams
   • Apply for visa at least 2 months before intake
-  • Have buffer time for unexpected delays"""
+  • Have buffer time for unexpected delays""")
 
     elif question_type == "visa_timeline":
         target_year = profile.target_intake_year
         countries = profile.preferred_countries or "your destination"
         
-        return f"""⏱️ YOUR VISA PROCESSING TIMELINE
+        return remove_divider_lines(f"""⏱️ YOUR VISA PROCESSING TIMELINE
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -471,7 +485,7 @@ May-Jun {target_year}:
    • Keep track of each university's deadline
    • Save all confirmation emails & tracking numbers
    • Call/email if application status stagnates
-   • Budget extra 2 weeks just in case"""
+   • Budget extra 2 weeks just in case""")
 
     elif question_type == "application_strategy":
         shortlisted = db.query(ShortlistedUniversity).filter(
@@ -483,7 +497,7 @@ May-Jun {target_year}:
         safe = len([s for s in shortlisted if s.category.value == "SAFE"])
         total = len(shortlisted)
         
-        return f""" YOUR PERSONALIZED APPLICATION STRATEGY
+        return remove_divider_lines(f""" YOUR PERSONALIZED APPLICATION STRATEGY
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -680,7 +694,7 @@ international students - ASK!
 
  You've got this! Your profile is solid for your target
    universities. Now make sure your application shows why
-   each university should choose YOU! """
+   each university should choose YOU! """)
 
     elif question_type == "top_universities_suggested":
         # Get top 5 recommended universities based on user preferences
@@ -698,7 +712,7 @@ international students - ASK!
         
         uni_list = "\n".join([f"  {i+1}. {uni.name} - {uni.country} | Ranking: #{uni.ranking}" for i, uni in enumerate(recommended)])
         
-        return f"""⭐ TOP UNIVERSITIES SUGGESTED FOR YOU
+        return remove_divider_lines(f"""⭐ TOP UNIVERSITIES SUGGESTED FOR YOU
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -726,13 +740,13 @@ international students - ASK!
  PRO TIP:
    The universities above match your profile and preferences.
    Don't miss out on hidden gems - explore all available options
-   in your target countries!"""
+   in your target countries!""")
 
     elif question_type == "funding_options":
         years = profile.target_intake_year - 2026 + 2
         total_cost = profile.budget_max * years
         
-        return f""" YOUR PERSONALIZED FUNDING STRATEGY
+        return remove_divider_lines(f""" YOUR PERSONALIZED FUNDING STRATEGY
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1022,7 +1036,7 @@ Recommended combination FOR YOU:
  YOU CAN AFFORD THIS!
    With planning, savings, and scholarship applications,
    your ${profile.budget_min:,}-${profile.budget_max:,} budget is REALISTIC
-   for many great universities worldwide!"""
+   for many great universities worldwide!""")
 
     else:
         return "I can help with: university selection, visa requirements, application strategy, exam prep, or funding. Which would you like to explore?"
