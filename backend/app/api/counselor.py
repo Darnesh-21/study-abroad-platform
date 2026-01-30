@@ -47,10 +47,9 @@ def remove_divider_lines(text: str) -> str:
     filtered_lines = []
     for line in lines:
         trimmed = line.strip()
-        # Skip lines that are only decorative characters
-        if trimmed and not all(c in '━─═─_=*~┃│║╋┣┫┳┻ ' for c in trimmed):
-            filtered_lines.append(line)
-        elif not trimmed:  # Keep empty lines for spacing
+        # Skip lines that are only decorative characters (no actual content)
+        is_divider = trimmed and all(c in '━─═─_=*~┃│║╋┣┫┳┻' for c in trimmed)
+        if not is_divider:
             filtered_lines.append(line)
     return '\n'.join(filtered_lines)
 
