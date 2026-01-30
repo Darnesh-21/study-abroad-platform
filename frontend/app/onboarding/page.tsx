@@ -1,14 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { onboardingAPI } from '@/lib/api';
+import { onboardingAPI, dashboardAPI } from '@/lib/api';
+import { useAuthStore } from '@/lib/store';
 
 export default function OnboardingPage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Check if user has already completed onboarding on mount
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      if (!isAuthenticated) {
+        // Not logged in, redirect to login
+        router.push('/auth/login');
+        return;
+      }
+
+      try {
+        const dashboard = await dashboardAPI.get();
+        if (dashboard.profile.onboarding_completed) {
+          // User already completed onboarding, redirect to dashboard
+          router.push('/dashboard');
+        }
+      } catch (err) {
+        // If error getting dashboard, continue showing onboarding form
+        console.log('Could not fetch dashboard, showing onboarding form');
+      }
+    };
+
+    checkOnboardingStatus();
+  }, [isAuthenticated, router]);
 
   const [formData, setFormData] = useState({
     // Academic Background
