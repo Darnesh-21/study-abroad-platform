@@ -237,17 +237,29 @@ export default function UniversityDetailPage() {
                         onChange={async (e) => {
                           try {
                             await todosAPI.update(task.id, { is_completed: e.target.checked });
-                            // Optionally refresh the page or update local state
-                            window.location.reload();
+                            // Update local state instead of reloading
+                            if (dashboard) {
+                              const updatedDashboard = {
+                                ...dashboard,
+                                committed_universities: dashboard.committed_universities?.map(cu => ({
+                                  ...cu,
+                                  tasks: cu.tasks.map(t => 
+                                    t.id === task.id ? { ...t, is_completed: e.target.checked } : t
+                                  )
+                                }))
+                              };
+                              setDashboard(updatedDashboard);
+                            }
                           } catch (error) {
                             console.error('Failed to update todo:', error);
+                            alert('Failed to update task');
                           }
                         }}
                         className="w-5 h-5 rounded border-gray-400 cursor-pointer mt-1"
                       />
                       <div className="flex-1">
-                        <p className="font-semibold text-white text-base">{task.title}</p>
-                        <p className="text-sm text-gray-400 mt-1">{task.description}</p>
+                        <p className={`font-semibold text-base ${task.is_completed ? 'line-through text-gray-500' : 'text-white'}`}>{task.title}</p>
+                        <p className={`text-sm mt-1 ${task.is_completed ? 'line-through text-gray-600' : 'text-gray-400'}`}>{task.description}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-xs px-2 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 rounded">
                             {task.category}
