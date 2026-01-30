@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { dashboardAPI, todoAPI } from '@/lib/api';
+import { dashboardAPI, todosAPI } from '@/lib/api';
 import { useAuthStore } from '@/lib/store';
 import { Dashboard } from '@/lib/types';
 
@@ -236,7 +236,7 @@ export default function UniversityDetailPage() {
                         checked={task.is_completed}
                         onChange={async (e) => {
                           try {
-                            await todoAPI.update(task.id, { is_completed: e.target.checked });
+                            await todosAPI.update(task.id, { is_completed: e.target.checked });
                             // Optionally refresh the page or update local state
                             window.location.reload();
                           } catch (error) {
