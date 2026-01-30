@@ -217,6 +217,7 @@ export default function ChatBot() {
                           ? 'bg-green-600 text-white rounded-br-none'
                           : 'bg-white text-gray-800 shadow-md rounded-bl-none border-l-4 border-green-500'
                       }`}
+                      style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}
                     >
                       {msg.role === 'assistant' ? (
                         <div className="prose prose-sm max-w-none">
@@ -263,6 +264,10 @@ export default function ChatBot() {
                           ) : (
                             // Render normal text response
                             msg.message.split('\n').map((line, i) => {
+                              // Skip ASCII art lines (lines with only decorative characters)
+                              if (/^[━\-=*~\s]+$/.test(line.trim())) {
+                                return null;
+                              }
                               // Bold headers (lines starting with ** or single words followed by :)
                               if (line.includes('**')) {
                                 return (
