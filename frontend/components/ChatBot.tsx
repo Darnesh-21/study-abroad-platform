@@ -264,9 +264,13 @@ export default function ChatBot() {
                           ) : (
                             // Render normal text response
                             msg.message.split('\n').map((line, i) => {
-                              // Skip ASCII art lines and horizontal dividers (lines with only decorative characters or mostly dashes/underscores)
+                              // Skip ASCII art lines and horizontal dividers
                               const trimmed = line.trim();
-                              if (/^[━\-=*~_┃│║╋┣┫┳┻\s]+$/.test(trimmed) || /^[-_=━]{3,}$/.test(trimmed)) {
+                              // Check if line is only decorative characters or is a divider
+                              if (trimmed.length === 0 || 
+                                  /^[━\-=*~_┃│║╋┣┫┳┻]+$/.test(trimmed) ||
+                                  /^[-_=━]{5,}$/.test(trimmed) ||
+                                  trimmed.replace(/[━\-=*~_\s]/g, '').length === 0) {
                                 return null;
                               }
                               // Bold headers (lines starting with ** or single words followed by :)
