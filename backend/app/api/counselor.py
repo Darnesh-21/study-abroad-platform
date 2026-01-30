@@ -191,7 +191,7 @@ EXAMPLE WEIGHTING (Adjust to YOUR priorities):
 - Location: 15%
 - Career Outcomes: 25%
 - Timeline: 10%
-Start comparing now to make an informed decision! """)
+Start comparing now to make an informed decision! """
         
         return response
     elif question_type == "visa_requirements":
