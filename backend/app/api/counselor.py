@@ -441,7 +441,7 @@ Target Distribution:
  Apply to ALL {dream} Dream universities
  Apply to {max(5, target)} Target universities
  Apply to {max(4, safe)} Safe universities
-───────────────────────────────
+
  TOTAL: {dream + max(5, target) + max(4, safe)} applications
 This gives you:
 • 15-20% acceptance rate from dreams = possible admits 
@@ -537,7 +537,7 @@ How to ask:
 Application fees: ${dream * 150:,}-${dream * 300:,} (Dream unis)
                  ${target * 100:,}-${target * 200:,} (Target unis)
                  ${safe * 50:,}-${safe * 100:,} (Safety unis)
-                 ──────────────────────────
+                 
 Total: Approximately ${total * 150:,}-${total * 250:,}
 Budget tip: Some universities offer fee waivers for
 international students - ASK!
@@ -753,7 +753,7 @@ Timeline: {profile.target_intake_year - 2026} years to prepare
       Family support: $Y
       + Scholarships: Often $5-20k
       + TA/RA: $12-15k
-      ───────────────────
+      
       Usually covers most costs! 
  YOUR PERSONALIZED FUNDING MIX
 Recommended combination FOR YOU:
@@ -776,7 +776,7 @@ Recommended combination FOR YOU:
    TA/RA: ${int(profile.budget_max * 0.35):,} (35%)
    Savings+Family: ${int(profile.budget_max * 0.25):,} (25%)
    Loan (if needed): ${max(0, int(profile.budget_max * 0.1)):,} (10%)
-   ─────────────────────────────────
+   
     FULLY FUNDED! 
  YOUR ACTION PLAN (Start NOW!)
  IMMEDIATELY (This Month):
