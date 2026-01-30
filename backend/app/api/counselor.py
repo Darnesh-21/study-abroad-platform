@@ -55,7 +55,6 @@ def generate_personalized_response(user: User, profile: UserProfile, db: Session
         gpa_strength = "Strong" if profile.gpa_percentage and profile.gpa_percentage >= 3.5 else "Good" if profile.gpa_percentage and profile.gpa_percentage >= 3.0 else "Average"
         
         return remove_divider_lines(f""" HOW TO CHOOSE THE RIGHT UNIVERSITY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR PROFILE SNAPSHOT
 Current Status:
   • Education: {profile.current_education_level} in {profile.degree_major}
@@ -69,7 +68,6 @@ Financial Reality:
   • Annual Budget: ${profile.budget_min:,} - ${profile.budget_max:,}
   • Total Program Cost: ${profile.budget_min * (years_until_target + 2):,} - ${profile.budget_max * (years_until_target + 2):,}
   • Preferred Countries: {profile.preferred_countries or 'Not specified'}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  PERSONALIZED SELECTION STRATEGY
 1️⃣ FILTER BY BUDGET (Most Important for YOU)
    Your budget limits you to specific countries:
@@ -122,7 +120,6 @@ Financial Reality:
       - Higher acceptance rates
       - Good quality
       - Reliable backup options
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR ACTION PLAN (Next 3 Months)
 □ Research 15-20 universities in your countries
 □ Filter by: budget, rankings, programs in {profile.field_of_study}
@@ -140,7 +137,6 @@ Financial Reality:
         uni_count = len(shortlisted)
         
         response = f""" HOW TO COMPARE UNIVERSITIES - YOUR SHORTLIST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR SHORTLISTED UNIVERSITIES: {uni_count} total
 """
         if uni_count > 0:
@@ -153,7 +149,6 @@ Financial Reality:
             response += "\n  (No universities shortlisted yet)\n"
         
         response += f"""
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  KEY COMPARISON FACTORS
 1️⃣ ACADEMIC QUALITY
    • Program ranking in {profile.field_of_study}
@@ -183,7 +178,6 @@ Financial Reality:
    • Application deadline
    • Program duration
    • Time to prepare and save funds
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  COMPARISON SCORECARD METHOD:
 1. Create a spreadsheet with universities as columns
 2. List 5 factors above as rows
@@ -205,9 +199,7 @@ Start comparing now to make an informed decision! """)
         target_year = profile.target_intake_year
         
         return remove_divider_lines(f"""️ VISA REQUIREMENTS FOR YOUR STUDY ABROAD
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  Your Target: {countries} | Intake Year: {target_year}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  UNIVERSAL DOCUMENTS (ALL Countries)
 You'll need:
  Valid Passport (6+ months validity beyond {target_year})
@@ -217,7 +209,6 @@ You'll need:
  English Proficiency Score (IELTS/TOEFL results)
  Statement of Purpose (SOP - your motivation letter)
  Recommendation Letters (2-3 from professors)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  USA (F-1 STUDENT VISA)
    Processing Time: 4-6 weeks
    Cost: $160
@@ -250,7 +241,6 @@ You'll need:
    Work: 20 hrs/week, full-time during breaks 
    Post-Study: Skilled migration options available 
    Your Budget Fit: Very good! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⏰ YOUR VISA TIMELINE (For Intake {target_year})
 By {target_year - 1}:
   □ Complete admission process
@@ -283,11 +273,9 @@ May-Jun {target_year}:
         countries = profile.preferred_countries or "your destination"
         
         return remove_divider_lines(f"""⏱️ YOUR VISA PROCESSING TIMELINE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  Target Intake: {target_year}
  Countries: {countries}
  Budget: ${profile.budget_min:,}-${profile.budget_max:,}/year
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⏳ PROCESSING TIMES BY COUNTRY
  USA (F-1): 4-6 weeks
    └─ Peak season: 6-12 weeks
@@ -301,7 +289,6 @@ May-Jun {target_year}:
  Australia: 2-4 weeks (FASTEST!)
    └─ Usually auto-approved 
    └─ No interview 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR MONTH-BY-MONTH PLAN
  {target_year - 1} AUGUST-SEPTEMBER (NOW!)
    Status: Decision window
@@ -385,7 +372,6 @@ May-Jun {target_year}:
     Attend orientation
     Register for classes
     Make friends! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ️ TIMELINE VARIATIONS
  You Can Go FASTER If:
     Straightforward case (no complications)
@@ -422,7 +408,6 @@ May-Jun {target_year}:
         total = len(shortlisted)
         
         return remove_divider_lines(f""" YOUR PERSONALIZED APPLICATION STRATEGY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR PROFILE SUMMARY
  Educational Background:
    Currently: {profile.current_education_level} in {profile.degree_major}
@@ -433,7 +418,6 @@ May-Jun {target_year}:
    Major: {profile.field_of_study}
    Intake: {profile.target_intake_year}
  Budget: ${profile.budget_min:,}-${profile.budget_max:,}/year
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR UNIVERSITY DISTRIBUTION
 Total Shortlisted: {total} universities
  DREAM UNIVERSITIES (Reach): {dream}
@@ -451,7 +435,6 @@ Total Shortlisted: {total} universities
    └─ Require: Meeting minimum requirements
    └─ Strategy: At least 3-4 of these
    └─ Why: Guaranteed admission backup plan
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  RECOMMENDED APPLICATION PORTFOLIO
 For YOUR profile ({total} universities), we recommend:
 Target Distribution:
@@ -464,7 +447,6 @@ This gives you:
 • 15-20% acceptance rate from dreams = possible admits 
 • 50-70% acceptance rate from targets = likely admits 
 • 70%+ acceptance rate from safeties = guaranteed backup 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR APPLICATION TIMELINE
  PHASE 1: PREPARATION ({profile.target_intake_year - 1} AUGUST-SEPTEMBER)
    Time to start: THIS MONTH!
@@ -517,7 +499,6 @@ This gives you:
     Compare final offers (tuition, scholarships, location)
    
     Goal: Choose university by April 30
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ️ ESSAY WRITING FORMULA (For Each University)
 Do NOT use the same SOP for all universities!
 Instead, follow this formula:
@@ -535,7 +516,6 @@ Example personalization points:
  Pro Tip: The more specific you are, the higher your
    chances. Universities want students who CHOSE them, not
    students who applied to everyone.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  RECOMMENDATION LETTERS
 Most important component of your application!
 Who to ask (in order of preference):
@@ -553,7 +533,6 @@ How to ask:
  Give 2-4 weeks notice minimum
  Send email reminder 1 week before deadline
  Thank them with a card after admission
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  COSTS & BUDGETING
 Application fees: ${dream * 150:,}-${dream * 300:,} (Dream unis)
                  ${target * 100:,}-${target * 200:,} (Target unis)
@@ -562,7 +541,6 @@ Application fees: ${dream * 150:,}-${dream * 300:,} (Dream unis)
 Total: Approximately ${total * 150:,}-${total * 250:,}
 Budget tip: Some universities offer fee waivers for
 international students - ASK!
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  FINAL SUCCESS TIPS
  Start early - September applications get 30% better results
  Follow each university's requirements EXACTLY (don't skip steps)
@@ -594,16 +572,13 @@ international students - ASK!
         uni_list = "\n".join([f"  {i+1}. {uni.name} - {uni.country} | Ranking: #{uni.ranking}" for i, uni in enumerate(recommended)])
         
         return remove_divider_lines(f"""⭐ TOP UNIVERSITIES SUGGESTED FOR YOU
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR PREFERENCES:
    • Countries: {profile.preferred_countries or 'All countries'}
    • Degree: {profile.intended_degree}
    • Field: {profile.field_of_study}
    • Budget: ${profile.budget_min:,}-${profile.budget_max:,}/year
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  TOP 5 UNIVERSITIES FOR YOU:
 {uni_list}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  NEXT STEPS:
    1. Click on each university to explore more details
    2. Compare program offerings and specializations
@@ -619,15 +594,12 @@ international students - ASK!
         total_cost = profile.budget_max * years
         
         return remove_divider_lines(f""" YOUR PERSONALIZED FUNDING STRATEGY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR FINANCIAL OVERVIEW
 Annual Budget: ${profile.budget_min:,} - ${profile.budget_max:,}
 Total Program Cost ({years} years): ${profile.budget_min * years:,} - ${total_cost:,}
 Funding Plan: {profile.funding_plan.value.replace('_', ' ').upper() if profile.funding_plan else 'FLEXIBLE'}
 Timeline: {profile.target_intake_year - 2026} years to prepare
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  FUNDING OPTIONS RANKED (BEST TO WORST)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  #1: SCHOLARSHIPS & GRANTS ⭐⭐⭐⭐⭐
    (FREE Money - Don't Have to Repay!)
     UNIVERSITY SCHOLARSHIPS
@@ -673,7 +645,6 @@ Timeline: {profile.target_intake_year - 2026} years to prepare
       └─ Even one external scholarship: $2,000-15,000
       └─ Plus university scholarship: $5,000-25,000
       └─ Total: Often COVERS most costs! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  #2: ASSISTANTSHIPS (EARN WHILE YOU STUDY)
    (PAY ME to Work + Study!)
    ‍ TEACHING ASSISTANT (TA)
@@ -716,7 +687,6 @@ Timeline: {profile.target_intake_year - 2026} years to prepare
       
       REALISTIC TOTAL: $15,000-40,000/year
       (Often EXCEEDS annual budget!) 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  #3: EDUCATION LOANS (Borrow Money)
    (Cheapest Borrowing Option)
     GOVERNMENT LOANS (BEST RATES)
@@ -754,7 +724,6 @@ Timeline: {profile.target_intake_year - 2026} years to prepare
    
     REALISTIC: Borrow $10,000-20,000
       (Combined with scholarships + work = DOABLE!) 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 4️⃣ #4: PERSONAL SAVINGS + FAMILY SUPPORT
    (Safety Net)
     YOUR SAVINGS PLAN
@@ -786,7 +755,6 @@ Timeline: {profile.target_intake_year - 2026} years to prepare
       + TA/RA: $12-15k
       ───────────────────
       Usually covers most costs! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR PERSONALIZED FUNDING MIX
 Recommended combination FOR YOU:
  STRATEGY:
@@ -810,7 +778,6 @@ Recommended combination FOR YOU:
    Loan (if needed): ${max(0, int(profile.budget_max * 0.1)):,} (10%)
    ─────────────────────────────────
     FULLY FUNDED! 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  YOUR ACTION PLAN (Start NOW!)
  IMMEDIATELY (This Month):
    □ Calculate exact total cost for YOUR programs
@@ -836,7 +803,6 @@ Recommended combination FOR YOU:
    □ Finalize all funding sources
    □ Arrange international student loan (if needed)
    □ Plan budget for first semester
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  FINAL SUCCESS TIPS
  DO THIS:
    • Apply for EVERY scholarship you qualify for
