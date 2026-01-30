@@ -185,8 +185,8 @@ export default function ProfilePage() {
       };
 
       await onboardingAPI.complete(submitData);
-      // Reload to get updated profile with onboarding_completed = true
-      await loadProfile();
+      // Redirect to dashboard after successful completion
+      router.push('/dashboard');
     } catch (error: any) {
       const errorMsg = error.response?.data?.detail;
       if (Array.isArray(errorMsg)) {
