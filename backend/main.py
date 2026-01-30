@@ -18,6 +18,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://study-abroad-platform-v2.vercel.app",
+        "https://study-abroad-platform-hpym.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
