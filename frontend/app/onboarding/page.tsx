@@ -22,8 +22,8 @@ export default function OnboardingPage() {
       }
 
       try {
-        const dashboard = await dashboardAPI.get();
-        if (dashboard.profile.onboarding_completed) {
+        const response = await dashboardAPI.get();
+        if (response.data.profile.onboarding_completed) {
           // User already completed onboarding, redirect to dashboard
           router.push('/dashboard');
         }
