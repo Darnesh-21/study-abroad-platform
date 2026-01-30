@@ -231,32 +231,41 @@ export default function UniversityDetailPage() {
                       key={task.id}
                       className="flex items-start gap-3 p-4 bg-white/5 border border-white/20 rounded-lg hover:border-white/30 transition"
                     >
-                      <input
-                        type="checkbox"
-                        checked={task.is_completed}
-                        onChange={async (e) => {
-                          try {
-                            await todosAPI.update(task.id, { is_completed: e.target.checked });
-                            // Update local state instead of reloading
-                            if (dashboard) {
-                              const updatedDashboard = {
-                                ...dashboard,
-                                committed_universities: dashboard.committed_universities?.map(cu => ({
-                                  ...cu,
-                                  tasks: cu.tasks.map(t => 
-                                    t.id === task.id ? { ...t, is_completed: e.target.checked } : t
-                                  )
-                                }))
-                              };
-                              setDashboard(updatedDashboard);
-                            }
-                          } catch (error) {
-                            console.error('Failed to update todo:', error);
-                            alert('Failed to update task');
+                      <button
+                        onClick={() => {
+                          // Update local state immediately
+                          if (dashboard) {
+                            const updatedDashboard = {
+                              ...dashboard,
+                              committed_universities: dashboard.committed_universities?.map(cu => ({
+                                ...cu,
+                                tasks: cu.tasks.map(t => 
+                                  t.id === task.id ? { ...t, is_completed: !t.is_completed } : t
+                                )
+                              }))
+                            };
+                            setDashboard(updatedDashboard);
+                            
+                            // Call API in background
+                            todosAPI.update(task.id, { is_completed: !task.is_completed }).catch(err => {
+                              console.error('Failed to update todo:', err);
+                            });
                           }
                         }}
-                        className="w-5 h-5 rounded border-gray-400 cursor-pointer mt-1"
-                      />
+                        className="flex-shrink-0"
+                      >
+                        <div className={`w-5 h-5 rounded border-2 mt-1 flex items-center justify-center transition ${
+                          task.is_completed 
+                            ? 'bg-green-500 border-green-500' 
+                            : 'border-gray-400 hover:border-green-400'
+                        }`}>
+                          {task.is_completed && (
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </div>
+                      </button>
                       <div className="flex-1">
                         <p className={`font-semibold text-base ${task.is_completed ? 'line-through text-gray-500' : 'text-white'}`}>{task.title}</p>
                         <p className={`text-sm mt-1 ${task.is_completed ? 'line-through text-gray-600' : 'text-gray-400'}`}>{task.description}</p>
